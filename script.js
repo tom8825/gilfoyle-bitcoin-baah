@@ -11,26 +11,26 @@ function getValue() {
             var obj = $.parseJSON(html);
             var rate = obj.bpi.GBP.rate_float;
             newValue = rate;
+            $("#results").html('<span>' + rate + '</span>');
+
+            var audio = new Audio('baaah.wav');
+            if (newValue !== oldValue) {
+                if (newValue > oldValue) {
+                    $("#results span").css('background', 'green')
+                } else {
+                    $("#results span").css('background', 'red')
+                }
+                oldValue = newValue;
+                audio.play();
+            }
+
             
-            $("#results").html('<span>'+rate+'</span>');
         }
     });
 }
 
 window.setInterval(function () {
     getValue();
-    checkChange();
 }, 5000);
 
-function checkChange(){
-    var audio = new Audio('baaah.wav');
-    if(newValue !== oldValue){
-        if(newValue > oldValue){
-            $("#results span").css('background', 'green')
-        }else{
-            $("#results span").css('background', 'red')
-        }
-        oldValue = newValue;
-        audio.play();
-    }
-}
+
